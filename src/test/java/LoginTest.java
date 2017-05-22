@@ -4,6 +4,7 @@ import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.firefox.FirefoxDriver;
 
+import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.WebDriverWait;
 import org.testng.Assert;
 import org.testng.annotations.AfterClass;
@@ -33,6 +34,12 @@ public class LoginTest {
             return list.get(0).isDisplayed();
         }
     }
+    //method to wait some element
+    public void waiter(By locator, int timesec){
+        WebDriverWait wait = new WebDriverWait(driver,timesec);
+        wait.until(ExpectedConditions.presenceOfElementLocated(locator));
+
+    }
 
     @BeforeClass// Run this method before the first test method in the current class is invoked
     public void setUp(){
@@ -47,7 +54,8 @@ public class LoginTest {
         driver.get("https://alerts.shotspotter.biz/");// open needed Web page
         /* driver.navigate().to("https://alerts.shotspotter.biz/"); - more long text to open web page */
 
-        sleep(4000);
+        //sleep(4000);
+        waiter(By.xpath("//input[@type='email']"),4);
 
         // search and create element
         WebElement logMail = driver.findElement(By.xpath("//input[@type='email']"));
@@ -61,7 +69,7 @@ public class LoginTest {
         WebElement logButtonGo = driver.findElement(By.xpath("//*[@class='button' and text()='GO']"));
         logButtonGo.click();
 
-        sleep(6000);
+        waiter(By.className("settings"),6);
 
         // search and create element
         String mainPage = driver.getCurrentUrl();
@@ -79,7 +87,7 @@ public class LoginTest {
         driver.manage().timeouts().implicitlyWait(30, TimeUnit.SECONDS);
         driver.get("https://alerts.shotspotter.biz/");// open needed Web page
 
-        sleep(4000);
+        waiter(By.xpath("//input[@type='email']"),4);
 
         WebElement logMail = driver.findElement(By.xpath("//input[@type='email']"));
         logMail.sendKeys("denvert1@shotspotter.net");
@@ -88,7 +96,7 @@ public class LoginTest {
         WebElement logButtonGo = driver.findElement(By.xpath("//*[@class='button' and text()='GO']"));
         logButtonGo.click();
 
-        sleep(6000);
+        waiter(By.xpath("//*[@class='invalid-credentials' and text()='The provided credentials are not correct.']"),6);
 
         // search text about invalid password, and return true if it is
         boolean textAboutInvalidPass = driver.getPageSource().contains("The provided credentials are not correct.");
