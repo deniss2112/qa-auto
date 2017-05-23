@@ -7,9 +7,8 @@ import org.openqa.selenium.firefox.FirefoxDriver;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.WebDriverWait;
 import org.testng.Assert;
-import org.testng.annotations.AfterClass;
-import org.testng.annotations.BeforeClass;
-import org.testng.annotations.Test;
+import org.testng.annotations.*;
+import org.testng.log4testng.Logger;
 
 import java.util.List;
 import java.util.concurrent.TimeUnit;
@@ -22,6 +21,7 @@ import static java.lang.Thread.sleep;
 public class LoginTest {
 
     private WebDriver driver;
+    private static final Logger log = Logger.getLogger(LoginTest.class);
 
       //Check if element present and displayed by locator
     public boolean isElementPresent(By locator){
@@ -34,14 +34,14 @@ public class LoginTest {
             return list.get(0).isDisplayed();
         }
     }
+
     //method to wait some element
     public void waiter(By locator, int timesec){
         WebDriverWait wait = new WebDriverWait(driver,timesec);
         wait.until(ExpectedConditions.presenceOfElementLocated(locator));
-
     }
 
-    @BeforeClass// Run this method before the first test method in the current class is invoked
+    @BeforeMethod// Run this method before the first test method in the current class is invoked
     public void setUp(){
         //Create a new instance to the Firefox driver
         driver = new FirefoxDriver();
@@ -49,6 +49,7 @@ public class LoginTest {
 
     @Test
     public void testLoninToShotspotter()throws InterruptedException{
+        log.info("start test 01");
         driver.manage().window().maximize(); // open window in full screen
         driver.manage().timeouts().implicitlyWait(30, TimeUnit.SECONDS);
         driver.get("https://alerts.shotspotter.biz/");// open needed Web page
@@ -76,13 +77,12 @@ public class LoginTest {
         //Verify main page URL
         Assert.assertEquals(mainPage, "https://alerts.shotspotter.biz/main");
         Assert.assertTrue(isElementPresent(By.className("settings")), "Element wasn't shown");
-
-        closeWindow();
+        log.info("end test 01");
     }
 
     @Test
     public  void  testToLoginInvalidPass() throws InterruptedException{
-        setUp();
+        log.info("start test 02");
         driver.manage().window().maximize(); // open window in full screen
         driver.manage().timeouts().implicitlyWait(30, TimeUnit.SECONDS);
         driver.get("https://alerts.shotspotter.biz/");// open needed Web page
@@ -104,10 +104,10 @@ public class LoginTest {
         Assert.assertTrue(textAboutInvalidPass, "Element wasn't shown");
         //Verify that text about invalid password present
         //Assert.assertTrue(isElementPresent(By.xpath("//*[@class='invalid-credentials' and text()='The provided credentials are not correct.']")),"Element wasn't shown");
-
+        log.info("end test 02");
     }
 
-    @AfterClass // Run this method after all the test methods in the current class have been run
+    @AfterMethod // Run this method after all the test methods in the current class have been run
     public  void closeWindow(){
         //Close all browser window
         driver.quit();
