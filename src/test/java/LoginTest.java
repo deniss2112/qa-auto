@@ -8,7 +8,7 @@ import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.WebDriverWait;
 import org.testng.Assert;
 import org.testng.annotations.*;
-import org.testng.log4testng.Logger;
+import org.apache.log4j.Logger;
 
 import java.util.List;
 import java.util.concurrent.TimeUnit;
@@ -21,7 +21,7 @@ import static java.lang.Thread.sleep;
 public class LoginTest {
 
     private WebDriver driver;
-    private static final Logger log = Logger.getLogger(LoginTest.class);
+    private final static Logger log = Logger.getLogger(LoginTest.class);
 
       //Check if element present and displayed by locator
     public boolean isElementPresent(By locator){
