@@ -1,4 +1,5 @@
-import com.google.common.base.Predicate;
+package test;
+
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
@@ -9,6 +10,7 @@ import org.openqa.selenium.support.ui.WebDriverWait;
 import org.testng.Assert;
 import org.testng.annotations.*;
 import org.apache.log4j.Logger;
+import page.LoginPage;
 
 import java.util.List;
 import java.util.concurrent.TimeUnit;
@@ -20,7 +22,7 @@ import static java.lang.Thread.sleep;
  */
 public class LoginTest {
 
-    private WebDriver driver;
+    private static WebDriver driver;
     private final static Logger log = Logger.getLogger(LoginTest.class);
 
       //Check if element present and displayed by locator
@@ -45,37 +47,38 @@ public class LoginTest {
     public void setUp(){
         //Create a new instance to the Firefox driver
         driver = new FirefoxDriver();
-    }
-
-    @Test
-    public void testLoninToShotspotter()throws InterruptedException{
-        log.info("start test 01");
         driver.manage().window().maximize(); // open window in full screen
         driver.manage().timeouts().implicitlyWait(30, TimeUnit.SECONDS);
         driver.get("https://alerts.shotspotter.biz/");// open needed Web page
         /* driver.navigate().to("https://alerts.shotspotter.biz/"); - more long text to open web page */
+    }
+
+    @Test
+    public void testLoninPositiv()throws InterruptedException{
+        log.info("start test 01");
+
+        String email ="denvert1@shotspotter.net";
+        String password ="Test123!";
 
         //sleep(4000);
         waiter(By.xpath("//input[@type='email']"),4);
 
-        // search and create element
-        WebElement logMail = driver.findElement(By.xpath("//input[@type='email']"));
-        logMail.clear();
-        logMail.sendKeys("denvert1@shotspotter.net");
-        // search and create element
-        WebElement logPass = driver.findElement(By.xpath("//input[@type='password']"));
-        logPass.clear();
-        logPass.sendKeys("Test123!");
-        // search and create element
-        WebElement logButtonGo = driver.findElement(By.xpath("//*[@class='button' and text()='GO']"));
-        logButtonGo.click();
+        //Check title and URL on login page
+        Assert.assertEquals(driver.getTitle(), "Shotspotter - Login", "Title is not valid");
+        Assert.assertEquals(driver.getCurrentUrl(), "https://alerts.shotspotter.biz/", "Wrong URL on login page");
+
+
+        LoginPage.logMail.clear();
+        LoginPage.logPass.clear();
+        LoginPage.logMail.sendKeys(email);
+        LoginPage.logPass.sendKeys(password);
+        LoginPage.logButtonGo.click();
 
         waiter(By.className("settings"),6);
 
-        // search and create element
-        String mainPage = driver.getCurrentUrl();
+        boolean mainPage = driver.getCurrentUrl().contains("https://alerts.shotspotter.biz/main");
         //Verify main page URL
-        Assert.assertEquals(mainPage, "https://alerts.shotspotter.biz/main");
+        Assert.assertTrue(mainPage, "Main page URL wrong");
         Assert.assertTrue(isElementPresent(By.className("settings")), "Element wasn't shown");
         log.info("end test 01");
     }
@@ -83,17 +86,15 @@ public class LoginTest {
     @Test
     public  void  testToLoginInvalidPass() throws InterruptedException{
         log.info("start test 02");
-        driver.manage().window().maximize(); // open window in full screen
-        driver.manage().timeouts().implicitlyWait(30, TimeUnit.SECONDS);
-        driver.get("https://alerts.shotspotter.biz/");// open needed Web page
 
         waiter(By.xpath("//input[@type='email']"),4);
 
         WebElement logMail = driver.findElement(By.xpath("//input[@type='email']"));
-        logMail.sendKeys("denvert1@shotspotter.net");
         WebElement logPass = driver.findElement(By.xpath("//input[@type='password']"));
-        logPass.sendKeys("Test123");
         WebElement logButtonGo = driver.findElement(By.xpath("//*[@class='button' and text()='GO']"));
+
+        logMail.sendKeys("denvert1@shotspotter.net");
+        logPass.sendKeys("Test123");
         logButtonGo.click();
 
         waiter(By.xpath("//*[@class='invalid-credentials' and text()='The provided credentials are not correct.']"),6);
