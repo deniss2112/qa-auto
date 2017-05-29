@@ -10,7 +10,7 @@ import org.openqa.selenium.support.ui.WebDriverWait;
 import org.testng.Assert;
 import org.testng.annotations.*;
 import org.apache.log4j.Logger;
-import page.LoginPage;
+import page.LoginAs;
 
 import java.util.List;
 import java.util.concurrent.TimeUnit;
@@ -48,7 +48,7 @@ public class LoginTest {
         //Create a new instance to the Firefox driver
         driver = new FirefoxDriver();
         driver.manage().window().maximize(); // open window in full screen
-        driver.manage().timeouts().implicitlyWait(30, TimeUnit.SECONDS);
+        driver.manage().timeouts().implicitlyWait(10, TimeUnit.SECONDS);
         driver.get("https://alerts.shotspotter.biz/");// open needed Web page
         /* driver.navigate().to("https://alerts.shotspotter.biz/"); - more long text to open web page */
     }
@@ -67,12 +67,15 @@ public class LoginTest {
         Assert.assertEquals(driver.getTitle(), "Shotspotter - Login", "Title is not valid");
         Assert.assertEquals(driver.getCurrentUrl(), "https://alerts.shotspotter.biz/", "Wrong URL on login page");
 
-
-        LoginPage.logMail.clear();
-        LoginPage.logPass.clear();
-        LoginPage.logMail.sendKeys(email);
-        LoginPage.logPass.sendKeys(password);
-        LoginPage.logButtonGo.click();
+        /*LoginPage loginPage = new LoginPage(driver);
+        loginPage.getLogMail().clear();
+        loginPage.getLogPass().clear();
+        loginPage.getLogMail().sendKeys(email);
+        loginPage.getLogPass().sendKeys(password);
+        loginPage.getLogButtonGo().click();*/
+        LoginAs loginAs = new LoginAs(driver);
+        loginAs.setEmail(email);
+        loginAs.setPassword(password);
 
         waiter(By.className("settings"),6);
 
@@ -87,15 +90,17 @@ public class LoginTest {
     public  void  testToLoginInvalidPass() throws InterruptedException{
         log.info("start test 02");
 
+        String email ="denvert1@shotspotter.net";
+        String password ="Test123";
+
         waiter(By.xpath("//input[@type='email']"),4);
 
-        WebElement logMail = driver.findElement(By.xpath("//input[@type='email']"));
-        WebElement logPass = driver.findElement(By.xpath("//input[@type='password']"));
-        WebElement logButtonGo = driver.findElement(By.xpath("//*[@class='button' and text()='GO']"));
+        Assert.assertEquals(driver.getTitle(), "Shotspotter - Login", "Title is not valid");
+        Assert.assertEquals(driver.getCurrentUrl(), "https://alerts.shotspotter.biz/", "Wrong URL on login page");
 
-        logMail.sendKeys("denvert1@shotspotter.net");
-        logPass.sendKeys("Test123");
-        logButtonGo.click();
+        LoginAs loginAs = new LoginAs(driver);
+        loginAs.setEmail(email);
+        loginAs.setPassword(password);
 
         waiter(By.xpath("//*[@class='invalid-credentials' and text()='The provided credentials are not correct.']"),6);
 
