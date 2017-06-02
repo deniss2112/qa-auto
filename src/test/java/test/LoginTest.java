@@ -26,23 +26,10 @@ public class LoginTest {
     private WebDriver driver;
     private final Logger log = Logger.getLogger(LoginTest.class);
 
-    //Check if element present and displayed by locator
-    public boolean isElementPresent(By locator){
-        driver.manage().timeouts().implicitlyWait(0, TimeUnit.SECONDS);
-        List<WebElement> list = driver.findElements(locator);
-        driver.manage().timeouts().implicitlyWait(30, TimeUnit.SECONDS);
-        if (list.size() ==0){
-            return false;
-        } else {
-            return list.get(0).isDisplayed();
-        }
-    }
-
     @BeforeMethod// Run this method before the first test method in the current class is invoked
     public void setUp(){
         //Create a new instance to the Firefox driver
         driver = new FirefoxDriver();
-
     }
 
     @Test
@@ -56,12 +43,12 @@ public class LoginTest {
         LoginPage loginPage = new LoginPage(driver);
 
         //Check title and URL on login page
-        Assert.assertTrue(loginPage.isLoginPageLoaded(), "Login page isn't loaded");
+        loginPage.isLoginPageLoaded();
         //loginPage.isLoginPageLoaded();
         MainPage mainPage = loginPage.loginAs(userEmail,userPassword);
 
         //Check URL and settings icon on main page
-        Assert.assertTrue(mainPage.isMainPageLoaded(), "Main page isn't loaded");
+        mainPage.isMainPageLoaded();
         log.info("end test 01");
     }
 
@@ -73,11 +60,11 @@ public class LoginTest {
         String userPassword ="Test123";
 
         LoginPage loginPage = new LoginPage(driver);
-        Assert.assertTrue(loginPage.isLoginPageLoaded(), "Login page isn't loaded");
+        loginPage.isLoginPageLoaded();
         loginPage.loginAsInvalidPass(userEmail,userPassword);
 
         //Verify that text about invalid password present
-        Assert.assertTrue(loginPage.isLoginFailed(), "Text about invalid password absent");
+        loginPage.isLoginFailed();
 
         log.info("end testLoginInvalidPass 02");
     }

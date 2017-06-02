@@ -50,22 +50,20 @@ public class LoginPage {
         waiter(By.xpath("//*[@class='invalid-credentials' and text()='The provided credentials are not correct.']"),6);
     }
 
-    public boolean isLoginPageLoaded(){
+    public void isLoginPageLoaded(){
         boolean loginPageUrl = driver.getCurrentUrl().contains("https://alerts.shotspotter.biz/");
         boolean loginPageTitle = driver.getTitle().contains("Shotspotter - Login");
         if(loginPageUrl==true && loginPageTitle==true){
-            return true;
         } else {
-            return false;
+            throw new IllegalStateException("Login page isn't loaded");
         }
     }
 
-    public boolean isLoginFailed(){
+    public void isLoginFailed(){
         boolean textAboutInvalidPass = driver.getPageSource().contains("The provided credentials are not correct.");
         if(textAboutInvalidPass==true){
-            return true;
         } else {
-            return false;
+            throw new IllegalStateException("Text about login fail absent");
         }
     }
 

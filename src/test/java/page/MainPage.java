@@ -37,12 +37,11 @@ public class MainPage {
         settingsIcon = driver.findElement(By.className("settings"));
     }
 
-    public boolean isMainPageLoaded(){
+    public void isMainPageLoaded(){
         boolean mainPageUrl = driver.getCurrentUrl().contains("https://alerts.shotspotter.biz/main");
         if(mainPageUrl==true && isElementPresent(By.className("settings"))==true){
-            return true;
         } else {
-            return false;
+            throw new IllegalStateException("Main page isn't loaded");
         }
 
     }
