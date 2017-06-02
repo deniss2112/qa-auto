@@ -23,8 +23,8 @@ import static java.lang.Thread.sleep;
  */
 public class LoginTest {
 
-    private static WebDriver driver;
-    private final static Logger log = Logger.getLogger(LoginTest.class);
+    private WebDriver driver;
+    private final Logger log = Logger.getLogger(LoginTest.class);
 
     //Check if element present and displayed by locator
     public boolean isElementPresent(By locator){
@@ -38,12 +38,6 @@ public class LoginTest {
         }
     }
 
-    //method to wait some element
-    public void waiter(By locator, int timesec){
-        WebDriverWait wait = new WebDriverWait(driver,timesec);
-        wait.until(ExpectedConditions.presenceOfElementLocated(locator));
-    }
-
     @BeforeMethod// Run this method before the first test method in the current class is invoked
     public void setUp(){
         //Create a new instance to the Firefox driver
@@ -53,50 +47,39 @@ public class LoginTest {
 
     @Test
     public void testLoninPositiv()throws InterruptedException{
-        log.info("start test 01");
+        log.info("start testLoninPositiv 01");
 
         String userEmail ="denvert1@shotspotter.net";
         String userPassword ="Test123!";
 
         //Open browser, open login page
         LoginPage loginPage = new LoginPage(driver);
-        //Check title and URL on login page
-        Assert.assertEquals(driver.getTitle(), "Shotspotter - Login", "Title is not valid");
-        Assert.assertEquals(driver.getCurrentUrl(), "https://alerts.shotspotter.biz/", "Wrong URL on login page");
 
+        //Check title and URL on login page
+        Assert.assertTrue(loginPage.isLoginPageLoaded(), "Login page isn't loaded");
+        //loginPage.isLoginPageLoaded();
         MainPage mainPage = loginPage.loginAs(userEmail,userPassword);
 
-        boolean mainPageUrl = driver.getCurrentUrl().contains("https://alerts.shotspotter.biz/main");
-        //Verify main page URL
-        Assert.assertTrue(mainPageUrl, "Main page URL wrong");
-        Assert.assertTrue(mainPage.isMainPageLoaded(), "Element wasn't shown");
+        //Check URL and settings icon on main page
+        Assert.assertTrue(mainPage.isMainPageLoaded(), "Main page isn't loaded");
         log.info("end test 01");
     }
 
     @Test
-    public  void  testToLoginInvalidPass() throws InterruptedException{
-        log.info("start test 02");
+    public  void  testLoginInvalidPass() throws InterruptedException{
+        log.info("start testLoginInvalidPass 02");
 
         String userEmail ="denvert1@shotspotter.net";
         String userPassword ="Test123";
 
-        waiter(By.xpath("//input[@type='email']"),4);
-
-        Assert.assertEquals(driver.getTitle(), "Shotspotter - Login", "Title is not valid");
-        Assert.assertEquals(driver.getCurrentUrl(), "https://alerts.shotspotter.biz/", "Wrong URL on login page");
-
         LoginPage loginPage = new LoginPage(driver);
-        loginPage.loginAs(userEmail,userPassword);
+        Assert.assertTrue(loginPage.isLoginPageLoaded(), "Login page isn't loaded");
+        loginPage.loginAsInvalidPass(userEmail,userPassword);
 
-        waiter(By.xpath("//*[@class='invalid-credentials' and text()='The provided credentials are not correct.']"),6);
+        //Verify that text about invalid password present
+        Assert.assertTrue(loginPage.isLoginFailed(), "Text about invalid password absent");
 
-        // search text about invalid password, and return true if it is
-        boolean textAboutInvalidPass = driver.getPageSource().contains("The provided credentials are not correct.");
-        //Verify that text about invalid password present
-        Assert.assertTrue(textAboutInvalidPass, "Element wasn't shown");
-        //Verify that text about invalid password present
-        //Assert.assertTrue(isElementPresent(By.xpath("//*[@class='invalid-credentials' and text()='The provided credentials are not correct.']")),"Element wasn't shown");
-        log.info("end test 02");
+        log.info("end testLoginInvalidPass 02");
     }
 
     @AfterMethod // Run this method after all the test methods in the current class have been run

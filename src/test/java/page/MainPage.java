@@ -38,7 +38,13 @@ public class MainPage {
     }
 
     public boolean isMainPageLoaded(){
-        return isElementPresent(By.className("settings"));
+        boolean mainPageUrl = driver.getCurrentUrl().contains("https://alerts.shotspotter.biz/main");
+        if(mainPageUrl==true && isElementPresent(By.className("settings"))==true){
+            return true;
+        } else {
+            return false;
+        }
+
     }
 
     public MainPage(WebDriver driver) {
@@ -46,11 +52,5 @@ public class MainPage {
         initMainPageElement();
         waiter(By.className("settings"),6);
     }
-
-
-
-
-
-
 
 }

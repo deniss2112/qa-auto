@@ -5,8 +5,10 @@ import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.WebDriverWait;
+import org.testng.Assert;
 import test.LoginTest;
 
+import java.util.List;
 import java.util.concurrent.TimeUnit;
 
 
@@ -39,17 +41,41 @@ public class LoginPage {
         return new MainPage(driver);
     }
 
+    public void loginAsInvalidPass(String userEmail, String userPassword){
+        logMail.clear();
+        logPass.clear();
+        logMail.sendKeys(userEmail);
+        logPass.sendKeys(userPassword);
+        logButtonGo.click();
+        waiter(By.xpath("//*[@class='invalid-credentials' and text()='The provided credentials are not correct.']"),6);
+    }
+
+    public boolean isLoginPageLoaded(){
+        boolean loginPageUrl = driver.getCurrentUrl().contains("https://alerts.shotspotter.biz/");
+        boolean loginPageTitle = driver.getTitle().contains("Shotspotter - Login");
+        if(loginPageUrl==true && loginPageTitle==true){
+            return true;
+        } else {
+            return false;
+        }
+    }
+
+    public boolean isLoginFailed(){
+        boolean textAboutInvalidPass = driver.getPageSource().contains("The provided credentials are not correct.");
+        if(textAboutInvalidPass==true){
+            return true;
+        } else {
+            return false;
+        }
+    }
+
     public LoginPage(WebDriver driver) {
-       this.driver = driver;
+        this.driver = driver;
         driver.manage().window().maximize(); // open window in full screen
         driver.manage().timeouts().implicitlyWait(10, TimeUnit.SECONDS);
         driver.get("https://alerts.shotspotter.biz/");// open needed Web page
         waiter(By.xpath("//input[@type='email']"),4);
-       initLoginPage();
+        initLoginPage();
     }
-
-
-
-
 
 }
