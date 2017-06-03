@@ -3,34 +3,35 @@ package page;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
+import org.openqa.selenium.support.CacheLookup;
+import org.openqa.selenium.support.FindBy;
+import org.openqa.selenium.support.PageFactory;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.WebDriverWait;
-import org.testng.Assert;
-import test.LoginTest;
 
-import java.util.List;
 import java.util.concurrent.TimeUnit;
 
 
 /**
  * Created by QA on 27.05.2017.
  */
-public class LoginPage {
-    private WebDriver driver;
+public class LoginPage extends BasePage {
+
+    @FindBy(xpath= "//input[@type='email']")
+    @CacheLookup
     private WebElement logMail;
+
+    @FindBy(xpath="//input[@type='password']")
+    @CacheLookup
     private WebElement logPass;
+
+    @FindBy(xpath="//*[@class='button' and text()='GO']")
+    @CacheLookup
     private WebElement logButtonGo;
 
-    private void waiter(By locator, int timesec){
-        WebDriverWait wait = new WebDriverWait(driver,timesec);
-        wait.until(ExpectedConditions.presenceOfElementLocated(locator));
-    }
-
-    private void initLoginPage(){
-        logMail = driver.findElement(By.xpath("//input[@type='email']"));
-        logPass = driver.findElement(By.xpath("//input[@type='password']"));
-        logButtonGo = driver.findElement(By.xpath("//*[@class='button' and text()='GO']"));
-    }
+    @FindBy(className=("invalid-credentials"))
+    @CacheLookup
+    private WebElement invalidCredentialsErrorMessage;
 
     public MainPage loginAs(String userEmail, String userPassword){
         logMail.clear();
@@ -41,39 +42,42 @@ public class LoginPage {
         return new MainPage(driver);
     }
 
-    public void loginAsInvalidPass(String userEmail, String userPassword){
+    public LoginPage loginAsReturnToLogin(String userEmail, String userPassword){
         logMail.clear();
         logPass.clear();
         logMail.sendKeys(userEmail);
         logPass.sendKeys(userPassword);
         logButtonGo.click();
-        waiter(By.xpath("//*[@class='invalid-credentials' and text()='The provided credentials are not correct.']"),6);
+        waiter(invalidCredentialsErrorMessage,6);
+        return this;
     }
 
-    public void isLoginPageLoaded(){
+    public boolean isLoginPageLoaded(){
         boolean loginPageUrl = driver.getCurrentUrl().contains("https://alerts.shotspotter.biz/");
         boolean loginPageTitle = driver.getTitle().contains("Shotspotter - Login");
-        if(loginPageUrl==true && loginPageTitle==true){
-        } else {
-            throw new IllegalStateException("Login page isn't loaded");
+        boolean logingPageEmail = driver.findElement(By.xpath("//input[@type='email']")).isDisplayed();
+        if(loginPageUrl==true && loginPageTitle==true && logingPageEmail==true){
+                return true;
+            } else {
+                return false;
+            }
         }
+
+    public boolean isInvalidCredentialMesgDisplayed(){
+        return invalidCredentialsErrorMessage.isDisplayed();
     }
 
-    public void isLoginFailed(){
-        boolean textAboutInvalidPass = driver.getPageSource().contains("The provided credentials are not correct.");
-        if(textAboutInvalidPass==true){
-        } else {
-            throw new IllegalStateException("Text about login fail absent");
-        }
+    public String getErrorMsgText(){
+        return  invalidCredentialsErrorMessage.getText();
     }
 
     public LoginPage(WebDriver driver) {
-        this.driver = driver;
+        super(driver);
         driver.manage().window().maximize(); // open window in full screen
         driver.manage().timeouts().implicitlyWait(10, TimeUnit.SECONDS);
         driver.get("https://alerts.shotspotter.biz/");// open needed Web page
-        waiter(By.xpath("//input[@type='email']"),4);
-        initLoginPage();
+        PageFactory.initElements(driver, this);
+        waiter(logMail,4);
     }
 
 }

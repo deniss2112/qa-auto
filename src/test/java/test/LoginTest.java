@@ -1,22 +1,16 @@
 package test;
 
-import org.openqa.selenium.By;
+
 import org.openqa.selenium.WebDriver;
-import org.openqa.selenium.WebElement;
 import org.openqa.selenium.firefox.FirefoxDriver;
 
-import org.openqa.selenium.support.ui.ExpectedConditions;
-import org.openqa.selenium.support.ui.WebDriverWait;
 import org.testng.Assert;
 import org.testng.annotations.*;
 import org.apache.log4j.Logger;
+import page.BasePage;
 import page.LoginPage;
 import page.MainPage;
 
-import java.util.List;
-import java.util.concurrent.TimeUnit;
-
-import static java.lang.Thread.sleep;
 
 /**
  * Created by QA on 20.05.2017.
@@ -43,13 +37,16 @@ public class LoginTest {
         LoginPage loginPage = new LoginPage(driver);
 
         //Check title and URL on login page
-        loginPage.isLoginPageLoaded();
+        Assert.assertEquals(loginPage.getPageTitle(), "Shotspotter - Login", "Wrong URL on Login page");
+        Assert.assertEquals(loginPage.getPageURL(),  "https://alerts.shotspotter.biz/", "Wrong Title on Login page");
+        //Assert.assertTrue(loginPage.isLoginPageLoaded(), "Login page isn't loaded");
+
         //loginPage.isLoginPageLoaded();
         MainPage mainPage = loginPage.loginAs(userEmail,userPassword);
 
         //Check URL and settings icon on main page
-        mainPage.isMainPageLoaded();
-        log.info("end test 01");
+        Assert.assertTrue(mainPage.isMainPageLoaded(), "Main page isn't loaded");
+        log.info("no errors in test 01");
     }
 
     @Test
@@ -60,13 +57,17 @@ public class LoginTest {
         String userPassword ="Test123";
 
         LoginPage loginPage = new LoginPage(driver);
-        loginPage.isLoginPageLoaded();
-        loginPage.loginAsInvalidPass(userEmail,userPassword);
+        loginPage = loginPage.loginAsReturnToLogin(userEmail, userPassword);
+        Assert.assertTrue(loginPage.isLoginPageLoaded(), "Login page isn't loaded");
+        //Verify that text about invalid password displayed
+        Assert.assertTrue(loginPage.isInvalidCredentialMesgDisplayed(), "No message about login failed");
 
-        //Verify that text about invalid password present
-        loginPage.isLoginFailed();
+        String textAboutInvalidPass = loginPage.getErrorMsgText();
+        //Verify that text about invalid password correct
+        Assert.assertEquals(textAboutInvalidPass,"The provided credentials are not correct.");
 
-        log.info("end testLoginInvalidPass 02");
+
+        log.info("no errors in test 02");
     }
 
     @AfterMethod // Run this method after all the test methods in the current class have been run
