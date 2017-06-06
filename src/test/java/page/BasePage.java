@@ -1,6 +1,7 @@
 package page;
 
 import org.openqa.selenium.By;
+import org.openqa.selenium.NoSuchElementException;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.ui.ExpectedConditions;
@@ -39,6 +40,15 @@ public class BasePage {
         } else {
             return list.get(0).isDisplayed();
         }
+    }
+
+    public boolean isElementExist(WebElement element){
+        try{
+            element.isDisplayed();
+        } catch (NoSuchElementException e){
+            return false;
+        }
+        return true;
     }
 
     public  BasePage(WebDriver driver){

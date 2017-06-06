@@ -33,7 +33,7 @@ public class LoginPage extends BasePage {
     @CacheLookup
     private WebElement invalidCredentialsErrorMessage;
 
-    public MainPage loginAs(String userEmail, String userPassword){
+    /*public MainPage loginAs(String userEmail, String userPassword){
         logMail.clear();
         logPass.clear();
         logMail.sendKeys(userEmail);
@@ -50,6 +50,21 @@ public class LoginPage extends BasePage {
         logButtonGo.click();
         waiter(invalidCredentialsErrorMessage,6);
         return this;
+    }*/
+
+    public <T> T login(String userEmail, String userPassword){
+        logMail.clear();
+        logPass.clear();
+        logMail.sendKeys(userEmail);
+        logPass.sendKeys(userPassword);
+        logButtonGo.click();
+        if (isElementExist(logButtonGo)){
+
+            return (T) PageFactory.initElements(driver, LoginPage.class);
+        } else {
+
+            return (T) PageFactory.initElements(driver, MainPage.class);
+        }
     }
 
     public boolean isLoginPageLoaded(){
@@ -74,10 +89,11 @@ public class LoginPage extends BasePage {
     public LoginPage(WebDriver driver) {
         super(driver);
         driver.manage().window().maximize(); // open window in full screen
-        driver.manage().timeouts().implicitlyWait(10, TimeUnit.SECONDS);
+        driver.manage().timeouts().implicitlyWait(30, TimeUnit.SECONDS);
         driver.get("https://alerts.shotspotter.biz/");// open needed Web page
         PageFactory.initElements(driver, this);
-        waiter(logMail,4);
+        waiter(logMail,30);
     }
 
 }
+

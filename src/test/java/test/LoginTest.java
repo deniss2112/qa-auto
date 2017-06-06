@@ -42,7 +42,7 @@ public class LoginTest {
         //Assert.assertTrue(loginPage.isLoginPageLoaded(), "Login page isn't loaded");
 
         //loginPage.isLoginPageLoaded();
-        MainPage mainPage = loginPage.loginAs(userEmail,userPassword);
+        MainPage mainPage = loginPage.login(userEmail,userPassword);
 
         //Check URL and settings icon on main page
         Assert.assertTrue(mainPage.isMainPageLoaded(), "Main page isn't loaded");
@@ -57,7 +57,7 @@ public class LoginTest {
         String userPassword ="Test123";
 
         LoginPage loginPage = new LoginPage(driver);
-        loginPage = loginPage.loginAsReturnToLogin(userEmail, userPassword);
+        loginPage = loginPage.login(userEmail, userPassword);
         Assert.assertTrue(loginPage.isLoginPageLoaded(), "Login page isn't loaded");
         //Verify that text about invalid password displayed
         Assert.assertTrue(loginPage.isInvalidCredentialMesgDisplayed(), "No message about login failed");

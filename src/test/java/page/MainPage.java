@@ -35,7 +35,7 @@ public class MainPage extends BasePage {
     public MainPage(WebDriver driver) {
         super(driver);
         PageFactory.initElements(driver, this);
-        waiter(settingsIcon,6);
+        waiter(settingsIcon,30);
     }
 
 }
