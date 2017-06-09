@@ -57,6 +57,8 @@ public class LoginTest {
         String userPassword ="Test123";
 
         LoginPage loginPage = new LoginPage(driver);
+        Assert.assertTrue(loginPage.isLoginPageLoaded(), "Login page isn't loaded");
+
         loginPage = loginPage.login(userEmail, userPassword);
         Assert.assertTrue(loginPage.isLoginPageLoaded(), "Login page isn't loaded");
         //Verify that text about invalid password displayed
@@ -65,7 +67,6 @@ public class LoginTest {
         String textAboutInvalidPass = loginPage.getErrorMsgText();
         //Verify that text about invalid password correct
         Assert.assertEquals(textAboutInvalidPass,"The provided credentials are not correct.");
-
 
         log.info("no errors in test 02");
     }

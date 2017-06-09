@@ -42,15 +42,6 @@ public class BasePage {
         }
     }
 
-    public boolean isElementExist(WebElement element){
-        try{
-            element.isDisplayed();
-        } catch (NoSuchElementException e){
-            return false;
-        }
-        return true;
-    }
-
     public  BasePage(WebDriver driver){
         this.driver=driver;
     }

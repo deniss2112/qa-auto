@@ -18,7 +18,6 @@ import java.util.concurrent.TimeUnit;
  */
 public class MainPage extends BasePage {
 
-
     @FindBy(className=("settings"))
     @CacheLookup
     private WebElement settingsIcon;

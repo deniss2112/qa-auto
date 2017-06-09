@@ -11,6 +11,8 @@ import org.openqa.selenium.support.ui.WebDriverWait;
 
 import java.util.concurrent.TimeUnit;
 
+import static java.lang.Thread.sleep;
+
 
 /**
  * Created by QA on 27.05.2017.
@@ -52,19 +54,16 @@ public class LoginPage extends BasePage {
         return this;
     }*/
 
-    public <T> T login(String userEmail, String userPassword){
+    public <T> T login(String userEmail, String userPassword) throws InterruptedException {
         logMail.clear();
         logPass.clear();
         logMail.sendKeys(userEmail);
         logPass.sendKeys(userPassword);
         logButtonGo.click();
-        if (isElementExist(logButtonGo)){
-
-            return (T) PageFactory.initElements(driver, LoginPage.class);
-        } else {
-
-            return (T) PageFactory.initElements(driver, MainPage.class);
-        }
+        sleep(6000);
+        if (isElementPresent(By.xpath("//*[@class='button' and text()='GO']"))){
+             return (T) this ;
+        } else return (T) new MainPage(driver);
     }
 
     public boolean isLoginPageLoaded(){
