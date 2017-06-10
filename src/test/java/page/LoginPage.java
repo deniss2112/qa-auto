@@ -20,19 +20,15 @@ import static java.lang.Thread.sleep;
 public class LoginPage extends BasePage {
 
     @FindBy(xpath= "//input[@type='email']")
-    @CacheLookup
     private WebElement logMail;
 
     @FindBy(xpath="//input[@type='password']")
-    @CacheLookup
     private WebElement logPass;
 
     @FindBy(xpath="//*[@class='button' and text()='GO']")
-    @CacheLookup
     private WebElement logButtonGo;
 
     @FindBy(className=("invalid-credentials"))
-    @CacheLookup
     private WebElement invalidCredentialsErrorMessage;
 
     /*public MainPage loginAs(String userEmail, String userPassword){
@@ -60,8 +56,7 @@ public class LoginPage extends BasePage {
         logMail.sendKeys(userEmail);
         logPass.sendKeys(userPassword);
         logButtonGo.click();
-        sleep(6000);
-        if (isElementPresent(By.xpath("//*[@class='button' and text()='GO']"))){
+        if (isElementDisplayed(logButtonGo,3)){
              return (T) this ;
         } else return (T) new MainPage(driver);
     }
@@ -87,11 +82,9 @@ public class LoginPage extends BasePage {
 
     public LoginPage(WebDriver driver) {
         super(driver);
-        driver.manage().window().maximize(); // open window in full screen
-        driver.manage().timeouts().implicitlyWait(30, TimeUnit.SECONDS);
-        driver.get("https://alerts.shotspotter.biz/");// open needed Web page
+
         PageFactory.initElements(driver, this);
-        waiter(logMail,30);
+        waitForElement(logMail,30);
     }
 
 }

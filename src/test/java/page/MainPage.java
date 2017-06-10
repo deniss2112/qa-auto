@@ -18,23 +18,32 @@ import java.util.concurrent.TimeUnit;
  */
 public class MainPage extends BasePage {
 
-    @FindBy(className=("settings"))
-    @CacheLookup
+    @FindBy(className = ("settings"))
     private WebElement settingsIcon;
 
-    public boolean isMainPageLoaded(){
+    @FindBy(xpath = "//settings-drop-down//li[text() = 'Logout')]")
+    private WebElement logoutMenuItem;
+
+    public boolean isMainPageLoaded() {
         boolean mainPageUrl = driver.getCurrentUrl().contains("https://alerts.shotspotter.biz/main");
-        if(mainPageUrl==true && isElementPresent(By.className("settings"))==true){
+        if (mainPageUrl == true && isElementDisplayed(settingsIcon, 10) == true) {
             return true;
         } else {
             return false;
         }
     }
 
+    public LoginPage logOut() {
+        settingsIcon.click();
+        PageFactory.initElements(driver, this);
+        waitForElementToClick(logoutMenuItem,10).click();
+        return PageFactory.initElements(driver, LoginPage.class);
+    }
+
     public MainPage(WebDriver driver) {
         super(driver);
         PageFactory.initElements(driver, this);
-        waiter(settingsIcon,30);
+        waitForElement(settingsIcon, 30);
     }
 
 }
