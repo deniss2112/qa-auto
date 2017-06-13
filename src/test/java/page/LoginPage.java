@@ -84,7 +84,7 @@ public class LoginPage extends BasePage {
         super(driver);
 
         PageFactory.initElements(driver, this);
-        waitForElement(logMail,30);
+        waitForElementIsDisplay(logMail,30);
     }
 
 }

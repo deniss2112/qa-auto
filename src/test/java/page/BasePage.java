@@ -15,6 +15,10 @@ import java.util.concurrent.TimeUnit;
  * Created by QA on 03.06.2017.
  */
 public class BasePage {
+
+    /**
+     *
+     */
     protected WebDriver driver;
 
     public String getPageURL(){
@@ -22,27 +26,42 @@ public class BasePage {
         return loginPageUrl;
     }
 
+    /**
+     * Common method to get current Page title
+     *
+     * @return String with current Page title
+     */
     public String getPageTitle(){
         String loginPageTitle = driver.getTitle();
         return loginPageTitle;
     }
 
-    protected WebElement waitForElement (WebElement element, int timesec) {
+    /**
+     * Waits until element is displayed using specific max timeout
+     *
+     * @param element WebElement to wait for
+     * @param timesec max timeout in seconds
+     * @return WebElement after expected condition
+     */
+    protected WebElement waitForElementIsDisplay (WebElement element, int timesec) {
         WebDriverWait wait = new WebDriverWait(driver, timesec);
         return wait.until(ExpectedConditions.visibilityOf(element));
     }
 
-    protected WebElement waitForElement(WebElement element) {
-        return waitForElement(element,10);
+    protected WebElement waitForElementIsDisplay(WebElement element) {
+        return waitForElementIsDisplay(element,10);
     }
 
-    /*protected void waitForElementToClick(WebElement element, int timesec) {
-        try {
-            WebDriverWait wait = new WebDriverWait(driver, timesec);
-            wait.until(ExpectedConditions.elementToBeSelected(element));
-        } catch (TimeoutException e) {
-        }
-    }*/
+    /**
+     * Waits until element is clickable using specific max timeout
+     *
+     * @param element WebElement to wait for
+     * @param timesec max timeout in seconds
+     */
+    protected void waitForElementToClick(WebElement element, int timesec) {
+        WebDriverWait wait = new WebDriverWait(driver, timesec);
+        wait.until(ExpectedConditions.elementToBeClickable(element));
+    }
 
     protected boolean isElementPresent(By locator){
         driver.manage().timeouts().implicitlyWait(0, TimeUnit.SECONDS);
@@ -57,7 +76,7 @@ public class BasePage {
 
     public boolean isElementDisplayed(WebElement element, int timeout){
         try {
-            waitForElement(element, timeout).isDisplayed();
+            waitForElementIsDisplay(element, timeout).isDisplayed();
         } catch (TimeoutException e) {
             return false;
         }

@@ -21,6 +21,9 @@ public class MainPage extends BasePage {
     @FindBy(className = ("settings"))
     private WebElement settingsIcon;
 
+    @FindBy(xpath = "//div[@class='settings isOpen']")
+    private WebElement settingsMenu;
+
     @FindBy(xpath = "//li[contains(text(),'Logout')]")
     private WebElement logoutMenuItem;
 
@@ -35,7 +38,8 @@ public class MainPage extends BasePage {
 
     public LoginPage logOut() {
         settingsIcon.click();
-        waitForElement(logoutMenuItem,5);
+        waitForElementIsDisplay(settingsMenu,5);
+        waitForElementToClick(logoutMenuItem,5);
         logoutMenuItem.click();
         return PageFactory.initElements(driver, LoginPage.class);
     }
@@ -43,7 +47,7 @@ public class MainPage extends BasePage {
     public MainPage(WebDriver driver) {
         super(driver);
         PageFactory.initElements(driver, this);
-        waitForElement(settingsIcon, 30);
+        waitForElementIsDisplay(settingsIcon, 30);
     }
 
 }
