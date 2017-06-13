@@ -4,6 +4,7 @@ import org.openqa.selenium.By;
 import org.openqa.selenium.TimeoutException;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
+import org.openqa.selenium.support.ui.ExpectedCondition;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.WebDriverWait;
 
@@ -35,10 +36,13 @@ public class BasePage {
         return waitForElement(element,10);
     }
 
-    protected WebElement waitForElementToClick (WebElement element, int timesec) {
-        WebDriverWait wait = new WebDriverWait(driver, timesec);
-        return wait.until(ExpectedConditions.element));
-    }
+    /*protected void waitForElementToClick(WebElement element, int timesec) {
+        try {
+            WebDriverWait wait = new WebDriverWait(driver, timesec);
+            wait.until(ExpectedConditions.elementToBeSelected(element));
+        } catch (TimeoutException e) {
+        }
+    }*/
 
     protected boolean isElementPresent(By locator){
         driver.manage().timeouts().implicitlyWait(0, TimeUnit.SECONDS);

@@ -25,7 +25,7 @@ public class LogoutTest {
     public void setUp(){
         driver = new FirefoxDriver();
         driver.manage().window().maximize(); // open window in full screen
-        driver.manage().timeouts().implicitlyWait(30, TimeUnit.SECONDS);
+        //driver.manage().timeouts().implicitlyWait(30, TimeUnit.SECONDS);
         driver.get("https://alerts.shotspotter.biz/");// open needed Web page
     }
 
