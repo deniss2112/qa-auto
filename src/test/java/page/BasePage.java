@@ -13,14 +13,22 @@ import java.util.concurrent.TimeUnit;
 
 /**
  * Created by QA on 03.06.2017.
+ *
+ * BasePage class describe base elements on WebPage on Shotspotter site
+ *
  */
 public class BasePage {
 
     /**
-     *
+     * Advertisement variable driver
      */
     protected WebDriver driver;
 
+    /**
+     * Common method to get current Page URL
+     *
+     * @return String with current Page URL
+     */
     public String getPageURL(){
         String loginPageUrl = driver.getCurrentUrl();
         return loginPageUrl;
@@ -48,6 +56,12 @@ public class BasePage {
         return wait.until(ExpectedConditions.visibilityOf(element));
     }
 
+    /**
+     * Waits until element is displayed using default 10sec timeout
+     *
+     * @param element WebElement to wait for
+     * @return WebElement after expected condition
+     */
     protected WebElement waitForElementIsDisplay(WebElement element) {
         return waitForElementIsDisplay(element,10);
     }
@@ -57,23 +71,20 @@ public class BasePage {
      *
      * @param element WebElement to wait for
      * @param timesec max timeout in seconds
+     * @return WebElement after expected condition
      */
-    protected void waitForElementToClick(WebElement element, int timesec) {
+    protected WebElement waitForElementToClick(WebElement element, int timesec) {
         WebDriverWait wait = new WebDriverWait(driver, timesec);
-        wait.until(ExpectedConditions.elementToBeClickable(element));
+        return wait.until(ExpectedConditions.elementToBeClickable(element));
     }
 
-    protected boolean isElementPresent(By locator){
-        driver.manage().timeouts().implicitlyWait(0, TimeUnit.SECONDS);
-        List<WebElement> list = driver.findElements(locator);
-        driver.manage().timeouts().implicitlyWait(30, TimeUnit.SECONDS);
-        if (list.size() ==0){
-            return false;
-        } else {
-            return list.get(0).isDisplayed();
-        }
-    }
-
+    /**
+     * Common method to check visibility of element
+     *
+     * @param element WebElement to wait for
+     * @param timeout max timeout to wait in seconds
+     * @return Boolean statement to visibility element
+     */
     public boolean isElementDisplayed(WebElement element, int timeout){
         try {
             waitForElementIsDisplay(element, timeout).isDisplayed();
@@ -83,6 +94,11 @@ public class BasePage {
         return true;
     }
 
+    /**
+     * Constructor to BasePage class
+     *
+     * @param driver initialized WebDriver in Base page class
+     */
     public  BasePage(WebDriver driver){
         this.driver=driver;
     }

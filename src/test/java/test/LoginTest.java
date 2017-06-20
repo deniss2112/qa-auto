@@ -16,23 +16,45 @@ import java.util.concurrent.TimeUnit;
 
 /**
  * Created by QA on 20.05.2017.
+ *
+ * Class LoginTest implement methods to different options to Login to Shotspotter site
  */
 public class LoginTest {
 
+    /**
+     * Advertisement variable driver
+     */
     private WebDriver driver;
+    /**
+     * Create new Logger to use it in test methods
+     */
     private final Logger log = Logger.getLogger(LoginTest.class);
+    /**
+     * String with registered user eMail
+     */
     public String userEmail ="sst.tau@gmail.com";
+    /**
+     * String with registered user Password
+     */
     public String userPassword ="P@ssword123";
 
+    /**
+     * Common method that performed before each test method, to open browser window,
+     * setup it by window size and go to site URL
+     */
     @BeforeMethod// Run this method before the first test method in the current class is invoked
     public void setUp(){
         //Create a new instance to the Firefox driver
         driver = new FirefoxDriver();
         driver.manage().window().maximize(); // open window in full screen
-        driver.manage().timeouts().implicitlyWait(30, TimeUnit.SECONDS);
         driver.get("https://alerts.shotspotter.biz/");// open needed Web page
     }
 
+    /**
+     * Common test method to testing Login with positiv result
+     *
+     * @throws InterruptedException
+     */
     @Test
     public void testLoninPositiv()throws InterruptedException{
         log.info("start testLoninPositiv 01");
@@ -56,6 +78,11 @@ public class LoginTest {
         log.info("no errors in test 01");
     }
 
+    /**
+     * Common test method to testing Login with negativ result
+     *
+     * @throws InterruptedException
+     */
     @Test
     public  void  testLoginInvalidPass() throws InterruptedException{
         log.info("start testLoginInvalidPass 02");
@@ -75,6 +102,9 @@ public class LoginTest {
         log.info("no errors in test 02");
     }
 
+    /**
+     * Common method that performed after each test method, to close browser window
+     */
     @AfterMethod // Run this method after all the test methods in the current class have been run
     public  void closeWindow(){
         //Close all browser window
