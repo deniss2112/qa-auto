@@ -1,6 +1,5 @@
 package test;
 
-import org.apache.log4j.Logger;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.firefox.FirefoxDriver;
 import org.testng.Assert;
@@ -10,16 +9,12 @@ import org.testng.annotations.Test;
 import page.LoginPage;
 import page.MainPage;
 
-import java.util.concurrent.TimeUnit;
-
 /**
- * Created by HTML on 10.06.2017.
- *
  * Class LogoutTest implement methods to different options to Logout register user from Shotspotter site
  */
 public class LogoutTest {
     /**
-     * Advertisement variable driver
+     * Declaration variable driver
      */
     private WebDriver driver;
     /**

@@ -3,45 +3,34 @@ package page;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
-import org.openqa.selenium.support.CacheLookup;
 import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.PageFactory;
-import org.openqa.selenium.support.ui.ExpectedConditions;
-import org.openqa.selenium.support.ui.WebDriverWait;
-
-import java.util.concurrent.TimeUnit;
-
-import static java.lang.Thread.sleep;
-
 
 /**
- * Created by QA on 27.05.2017.
- *
  * LoginPage class describe Login Page at site Shotspotter
- *
  */
 public class LoginPage extends BasePage {
 
     /**
-     * Advertisement variable from data type WebElement by name: logMail
+     * Declaration variable from data type WebElement by name: logMail
      */
     @FindBy(xpath= "//input[@type='email']")
     private WebElement logMail;
 
     /**
-     * Advertisement variable from data type WebElement by name: logPass
+     * Declaration variable from data type WebElement by name: logPass
      */
     @FindBy(xpath="//input[@type='password']")
     private WebElement logPass;
 
     /**
-     * Advertisement variable from data type WebElement by name: logButtonGo
+     * Declaration variable from data type WebElement by name: logButtonGo
      */
     @FindBy(xpath="//*[@class='button' and text()='GO']")
     private WebElement logButtonGo;
 
     /**
-     * Advertisement variable from data type WebElement by name: invalidCredentialsErrorMessage
+     * Declaration variable from data type WebElement by name: invalidCredentialsErrorMessage
      */
     @FindBy(className=("invalid-credentials"))
     private WebElement invalidCredentialsErrorMessage;
@@ -102,7 +91,7 @@ public class LoginPage extends BasePage {
     /**
      * Constructor to LoginPage class
      *
-     * @param driver variable of WebDriver which we Advertisement in BasePage class
+     * @param driver variable of WebDriver which we Declaration in BasePage class
      */
     public LoginPage(WebDriver driver) {
         super(driver);

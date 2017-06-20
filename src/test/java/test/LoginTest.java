@@ -3,26 +3,19 @@ package test;
 
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.firefox.FirefoxDriver;
-
 import org.testng.Assert;
 import org.testng.annotations.*;
 import org.apache.log4j.Logger;
-import page.BasePage;
 import page.LoginPage;
 import page.MainPage;
 
-import java.util.concurrent.TimeUnit;
-
-
 /**
- * Created by QA on 20.05.2017.
- *
  * Class LoginTest implement methods to different options to Login to Shotspotter site
  */
 public class LoginTest {
 
     /**
-     * Advertisement variable driver
+     * Declaration variable driver
      */
     private WebDriver driver;
     /**
@@ -32,11 +25,11 @@ public class LoginTest {
     /**
      * String with registered user eMail
      */
-    public String userEmail ="sst.tau@gmail.com";
+    public String userEmail ="denvert1@shotspotter.net";//"sst.tau@gmail.com"
     /**
      * String with registered user Password
      */
-    public String userPassword ="P@ssword123";
+    public String userPassword ="Test123!";//"P@ssword123"
 
     /**
      * Common method that performed before each test method, to open browser window,
@@ -58,9 +51,6 @@ public class LoginTest {
     @Test
     public void testLoninPositiv()throws InterruptedException{
         log.info("start testLoninPositiv 01");
-
-        //String userEmail ="denvert1@shotspotter.net";
-        // String userPassword ="Test123!";
 
         //Open browser, open login page
         LoginPage loginPage = new LoginPage(driver);

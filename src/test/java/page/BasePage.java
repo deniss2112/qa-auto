@@ -1,26 +1,18 @@
 package page;
 
-import org.openqa.selenium.By;
 import org.openqa.selenium.TimeoutException;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
-import org.openqa.selenium.support.ui.ExpectedCondition;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.WebDriverWait;
 
-import java.util.List;
-import java.util.concurrent.TimeUnit;
-
 /**
- * Created by QA on 03.06.2017.
- *
  * BasePage class describe base elements on WebPage on Shotspotter site
- *
  */
 public class BasePage {
 
     /**
-     * Advertisement variable driver
+     * Declaration variable driver
      */
     protected WebDriver driver;
 
