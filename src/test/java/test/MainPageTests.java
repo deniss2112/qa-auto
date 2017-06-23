@@ -3,9 +3,7 @@ package test;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.firefox.FirefoxDriver;
 import org.testng.Assert;
-import org.testng.annotations.AfterMethod;
-import org.testng.annotations.BeforeMethod;
-import org.testng.annotations.Test;
+import org.testng.annotations.*;
 import page.LoginPage;
 import page.MainPage;
 
@@ -28,7 +26,7 @@ public class MainPageTests {
         MainPage mainPage = loginPage.login(userEmail,userPassword);
 
         mainPage.switchTimeFramePeriod(7);
-        int resultsCount = mainPage.getResultsCount();
+        int resultsCount =mainPage.getResultsCount();
         int incedentsCardsCount = mainPage.getIncedentsCardsCount();
 
         Assert.assertEquals(resultsCount, incedentsCardsCount, "Results count doesn't much Incedents cards count");

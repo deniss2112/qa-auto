@@ -7,6 +7,7 @@ import org.openqa.selenium.support.PageFactory;
 
 import java.util.List;
 
+
 /**
  * MainPage class describe Main Page at site Shotspotter
  */
@@ -42,14 +43,20 @@ public class MainPage extends BasePage {
     @FindBy(xpath = "//div[@class='available-options']//*[@class='time-increment' and text()='7']")
     private WebElement timeFrameSwitch7Days;
 
+    @FindBy(xpath = "//div[@class='selected-option']//*[@class='time-increment' and text()='7']")
+    private WebElement timeFrameSwitch7DaysSelected;
+
     @FindBy(xpath = "//*[@class='result-count']")
     private WebElement resultsCount;
 
-    @FindBy(xpath = "//*[text()='List'")
+    @FindBy(xpath = "//*[text()='List']")
     private WebElement listButton;
 
     @FindBy(xpath = "//incident-list//incident-card")
     private List<WebElement> incedentsCardsList;
+
+    @FindBy(xpath = "//*[@class='gmnoprint' and img[contains(@src,'assets/markers/small')]]")
+    private WebElement markerOnMap;
 
     /**
      * Common method to verify that Main Page loaded
@@ -79,22 +86,24 @@ public class MainPage extends BasePage {
     }
 
     public int getResultsCount(){
-        wait ?
-        return Integer.parseInt(resultsCount.getText().replace("Results", ""));
+        return Integer.parseInt(resultsCount.getText().replace(" RESULTS", ""));
     }
 
     public void switchTimeFramePeriod(int timeFramePeriod) {
         incedentsTimeFrameSwitch.click();
+        waitForElementToClick(timeFrameSwitch7Days,10);
         switch (timeFramePeriod){
             case 24:
                 timeFrameSwitch24Hours.click();
-                wait ?
+                waitForElementIsDisplay(markerOnMap, 10);
                 break;
             case 3:
                 timeFrameSwitch3Days.click();
+                waitForElementIsDisplay(markerOnMap, 10);
                 break;
             case 7:
                 timeFrameSwitch7Days.click();
+                waitForElementIsDisplay(markerOnMap, 10);
                 break;
         }
     }
