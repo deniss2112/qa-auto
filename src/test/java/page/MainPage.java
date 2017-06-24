@@ -1,5 +1,6 @@
 package page;
 
+import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
@@ -34,15 +35,6 @@ public class MainPage extends BasePage {
     @FindBy(xpath = "//filter-menu/div[@class='selected-option']")
     private WebElement incedentsTimeFrameSwitch;
 
-    @FindBy(xpath = "//div[@class='available-options']//*[@class='time-increment' and text()='24']")
-    private WebElement timeFrameSwitch24Hours;
-
-    @FindBy(xpath = "//div[@class='available-options']//*[@class='time-increment' and text()='3']")
-    private WebElement timeFrameSwitch3Days;
-
-    @FindBy(xpath = "//div[@class='available-options']//*[@class='time-increment' and text()='7']")
-    private WebElement timeFrameSwitch7Days;
-
     @FindBy(xpath = "//div[@class='selected-option']//*[@class='time-increment' and text()='7']")
     private WebElement timeFrameSwitch7DaysSelected;
 
@@ -57,6 +49,19 @@ public class MainPage extends BasePage {
 
     @FindBy(xpath = "//*[@class='gmnoprint' and img[contains(@src,'assets/markers/small')]]")
     private WebElement markerOnMap;
+
+    private WebElement getTimeFramePeriodOption(int period){
+        return driver.findElement(By.xpath(
+                String.format("//div[@class='available-options']//*[@class='time-increment' and text()='%d']", period)));
+    }
+    /*
+    The most commonly used ones are:
+
+    %s - insert a string
+    %d - insert a signed integer (decimal)
+    %f - insert a real number, standard notation
+
+     */
 
     /**
      * Common method to verify that Main Page loaded
@@ -91,21 +96,22 @@ public class MainPage extends BasePage {
 
     public void switchTimeFramePeriod(int timeFramePeriod) {
         incedentsTimeFrameSwitch.click();
-        waitForElementToClick(timeFrameSwitch7Days,10);
-        switch (timeFramePeriod){
-            case 24:
-                timeFrameSwitch24Hours.click();
-                waitForElementIsDisplay(markerOnMap, 10);
-                break;
-            case 3:
-                timeFrameSwitch3Days.click();
-                waitForElementIsDisplay(markerOnMap, 10);
-                break;
-            case 7:
-                timeFrameSwitch7Days.click();
-                waitForElementIsDisplay(markerOnMap, 10);
-                break;
-        }
+        waitForElementToClick(getTimeFramePeriodOption(timeFramePeriod),10);
+        getTimeFramePeriodOption(timeFramePeriod).click();
+        waitResultCounterUpdated(10);
+    }
+
+    public void waitResultCounterUpdated(int maxTimeoutSec){
+        int initialResultCount = getResultsCount();
+            for(int i=0; i<maxTimeoutSec; i++){
+                try{
+                    Thread.sleep(1000);
+                    int currentResultCount = getResultsCount();
+                    if(initialResultCount != currentResultCount){
+                        break;
+                    }
+                } catch (InterruptedException ie){}
+            }
     }
 
     public int getIncedentsCardsCount() {

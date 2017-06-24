@@ -25,11 +25,11 @@ public class LoginTest {
     /**
      * String with registered user eMail
      */
-    public String userEmail ="denvert1@shotspotter.net";//"sst.tau@gmail.com"
+    public String userEmail ="sst.tau@gmail.com";//"denvert1@shotspotter.net"
     /**
      * String with registered user Password
      */
-    public String userPassword ="Test123!";//"P@ssword123"
+    public String userPassword ="P@ssword123";//"Test123!"
 
     /**
      * Common method that performed before each test method, to open browser window,
@@ -46,10 +46,9 @@ public class LoginTest {
     /**
      * Common test method to testing Login with positiv result
      *
-     * @throws InterruptedException
      */
     @Test
-    public void testLoninPositiv()throws InterruptedException{
+    public void testLoninPositiv(){
         log.info("start testLoninPositiv 01");
 
         //Open browser, open login page
@@ -71,10 +70,20 @@ public class LoginTest {
     /**
      * Common test method to testing Login with negativ result
      *
-     * @throws InterruptedException
      */
-    @Test
-    public  void  testLoginInvalidPass() throws InterruptedException{
+
+    //все негатив тесты с помошью дата провайдера  (в дата провайдере 3 значения) емаил пасворд ерор месседж
+
+    @DataProvider
+    public static Object[][] loginData(){
+        return new Object[][] {
+                {"email","password","error message"},
+                {3},
+                {7}};
+    }
+
+    @Test(dataProvider = "loginData" )
+    public  void  testLoginInvalidPass(String ss){
         log.info("start testLoginInvalidPass 02");
 
         LoginPage loginPage = new LoginPage(driver);
