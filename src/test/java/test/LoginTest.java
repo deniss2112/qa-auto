@@ -77,26 +77,39 @@ public class LoginTest {
     @DataProvider
     public static Object[][] loginData(){
         return new Object[][] {
-                {"email","password","error message"},
-                {3},
-                {7}};
+                {"","","The provided credentials are not correct."},
+                {"","P@ssword123","The provided credentials are not correct."},
+                {"sst.tau@gmail.com","","The provided credentials are not correct."},
+                {"sst.tau@gmail.com","P@ssword12","The provided credentials are not correct."},
+                {"sst.tau@gmail.comm","P@ssword1233","The provided credentials are not correct."},
+                {"P@ssword123","sst.tau@gmail.com","The provided credentials are not correct."},
+                {" sst.tau@gmail.com","P@ssword123","The provided credentials are not correct."},
+                {"sst.tau@gmail.com ","P@ssword123","The provided credentials are not correct."},
+                {"sst.tau@gmail.com"," P@ssword123","The provided credentials are not correct."},
+                {"sst.tau@gmail.com","P@ssword123 ","The provided credentials are not correct."},
+                {"Sst.tau@gmail.com","P@ssword123","The provided credentials are not correct."},
+                {"sst.tau@gmail.com","P@Ssword123","The provided credentials are not correct."},
+                {"                 ","P@ssword123","The provided credentials are not correct."},
+                {"sst.tau@gmail.com","           ","The provided credentials are not correct."},
+
+        };
     }
 
     @Test(dataProvider = "loginData" )
-    public  void  testLoginInvalidPass(String ss){
+    public  void  testLoginInvalidPass(String userEmail, String userPassword, String errorMessage){
         log.info("start testLoginInvalidPass 02");
 
         LoginPage loginPage = new LoginPage(driver);
         Assert.assertTrue(loginPage.isLoginPageLoaded(), "Login page isn't loaded");
 
-        loginPage = loginPage.login(userEmail, "123");
+        loginPage = loginPage.login(userEmail, userPassword);
         Assert.assertTrue(loginPage.isLoginPageLoaded(), "Login page isn't loaded");
         //Verify that text about invalid password displayed
         Assert.assertTrue(loginPage.isInvalidCredentialMesgDisplayed(), "No message about login failed");
 
         String textAboutInvalidPass = loginPage.getErrorMsgText();
         //Verify that text about invalid password correct
-        Assert.assertEquals(textAboutInvalidPass,"The provided credentials are not correct.");
+        Assert.assertEquals(textAboutInvalidPass,errorMessage);
 
         log.info("no errors in test 02");
     }
