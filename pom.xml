@@ -49,7 +49,9 @@
           устанавливать мавен бинар;
           мавен команды запускаются там где лежит пом.хмл
           mvn clean test -DsuiteXmlFile=login-tests.xml
-          ДЗ установить дженкинс-->
+          ДЗ установить дженкинс
+          In xml different browser , in code read from xml and defind driver
+          -->
 
     </dependencies>
 </project>
