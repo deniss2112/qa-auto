@@ -7,6 +7,24 @@
     <groupId>com.itea</groupId>
     <artifactId>qa-auto</artifactId>
     <version>1.0-SNAPSHOT</version>
+
+
+    <build>
+        <plugins>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-surefire-plugin</artifactId>
+                <version>2.20</version>
+                <configuration>
+                    <suiteXmlFiles>
+                        <suiteXmlFile>${suiteXmlFile}</suiteXmlFile>
+                    </suiteXmlFiles>
+                </configuration>
+            </plugin>
+        </plugins>
+    </build>
+
+
     <dependencies>
         <dependency>
             <groupId>org.seleniumhq.selenium</groupId>
@@ -26,6 +44,12 @@
             <artifactId>log4j</artifactId>
             <version>1.2.17</version>
         </dependency>
+
+          <!--в случае зависимости данных между тестами - следует добавить еще тестовые данные которые не будут зависимые (на пример - добавить  еще логин пользователя);
+          устанавливать мавен бинар;
+          мавен команды запускаются там где лежит пом.хмл
+          mvn clean test -DsuiteXmlFile=login-tests.xml
+          ДЗ установить дженкинс-->
 
     </dependencies>
 </project>

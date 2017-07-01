@@ -1,0 +1,10 @@
+<!DOCTYPE suite SYSTEM "http://testng.org/testng-1.0.dtd" >
+
+<suite name="LoginTests" verbose="1" >
+    <test name="Nopackage" >
+        <classes>
+            <class name="test.LoginTest" />
+            <class name="test.LogoutTest" />
+        </classes>
+    </test>
+</suite>

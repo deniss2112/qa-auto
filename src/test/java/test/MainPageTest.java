@@ -8,7 +8,7 @@ import page.LoginPage;
 import page.MainPage;
 
 
-public class MainPageTests {
+public class MainPageTest {
     private WebDriver driver;
     private  MainPage mainPage;
     public String userEmail ="denvert1@shotspotter.net";
