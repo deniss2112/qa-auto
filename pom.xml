@@ -51,6 +51,7 @@
           mvn clean test -DsuiteXmlFile=login-tests.xml
           ДЗ установить дженкинс
           In xml different browser , in code read from xml and defind driver
+          crome driver : https://chromedriver.storage.googleapis.com/index.html?path=2.30/
           -->
 
     </dependencies>

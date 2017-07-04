@@ -1,6 +1,7 @@
 package test;
 
 import org.openqa.selenium.WebDriver;
+import org.openqa.selenium.chrome.ChromeDriver;
 import org.openqa.selenium.firefox.FirefoxDriver;
 import org.testng.Assert;
 import org.testng.annotations.*;
@@ -15,8 +16,20 @@ public class MainPageTest {
     public String userPassword ="Test123!";
 
     @BeforeClass
-    public void setUp(){
-        driver = new FirefoxDriver();
+    @Parameters("browser")
+    public void setUp(String browserName) throws Exception {
+        if (browserName.equalsIgnoreCase("Firefox")) {
+            //Create a new instance to the Firefox driver
+            driver = new FirefoxDriver();
+        }
+        else if (browserName.equalsIgnoreCase("Chrome")) {
+            System.setProperty("webdriver.chrome.driver",
+                    "C:/Users/QA/Downloads/chromedriver_win32/chromedriver.exe");
+            driver = new ChromeDriver();
+        }
+        else {
+            throw new Exception("Browser is not correct");
+        }
         driver.manage().window().maximize(); // open window in full screen
         driver.get("https://alerts.shotspotter.biz/");// open needed Web page
         LoginPage loginPage = new LoginPage(driver);
