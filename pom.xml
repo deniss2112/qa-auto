@@ -49,9 +49,18 @@
           устанавливать мавен бинар;
           мавен команды запускаются там где лежит пом.хмл
           mvn clean test -DsuiteXmlFile=login-tests.xml
-          ДЗ установить дженкинс
-          In xml different browser , in code read from xml and defind driver
+
+          ДЗ
+          установить дженкинс
+
+          In xml different browser , in code read from xml and defind driver : https://stackoverflow.com/questions/36793627/multiple-browser-in-parallel-test-using-selenium-webdriver
+
           crome driver : https://chromedriver.storage.googleapis.com/index.html?path=2.30/
+
+          default parametr(@Optional) - https://examples.javacodegeeks.com/enterprise-java/testng/testng-parameters-annotation-example/
+
+          paralel tests -http://howtodoinjava.com/testng/testng-executing-parallel-tests/
+          https://stackoverflow.com/questions/39614054/how-may-i-run-testing-suite-xml-files-in-parallel
           -->
 
     </dependencies>

@@ -38,7 +38,7 @@ public class LoginTest {
      */
     @BeforeMethod// Run this method before the first test method in the current class is invoked
     @Parameters("browser")
-    public void setUp(String browserName) throws Exception {
+    public void setUp(@Optional("Firefox") String browserName ) throws Exception {
         if (browserName.equalsIgnoreCase("Firefox")) {
             //Create a new instance to the Firefox driver
             driver = new FirefoxDriver();
