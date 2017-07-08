@@ -103,7 +103,7 @@ public class LoginTest {
                 {"sst.tau@gmail.com","P@Ssword123","The provided credentials are not correct."},
                 {"                 ","P@ssword123","The provided credentials are not correct."},
                 {"sst.tau@gmail.com","           ","The provided credentials are not correct."},
-
+                //User account has been locked due to too many failed authentication requests.
         };
     }
 
