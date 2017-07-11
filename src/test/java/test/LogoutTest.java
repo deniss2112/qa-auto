@@ -1,11 +1,10 @@
 package test;
 
 import org.openqa.selenium.WebDriver;
+import org.openqa.selenium.chrome.ChromeDriver;
 import org.openqa.selenium.firefox.FirefoxDriver;
 import org.testng.Assert;
-import org.testng.annotations.AfterMethod;
-import org.testng.annotations.BeforeMethod;
-import org.testng.annotations.Test;
+import org.testng.annotations.*;
 import page.LoginPage;
 import page.MainPage;
 
@@ -31,8 +30,22 @@ public class LogoutTest {
      * setup it by window size and go to site URL
      */
     @BeforeMethod
-    public void setUp(){
-        driver = new FirefoxDriver();
+    @Parameters("browser")
+    public void setUp(@Optional("Firefox") String browserName ) throws Exception {
+        if (browserName.equalsIgnoreCase("Firefox")) {
+            System.setProperty("webdriver.gecko.driver",
+                    "src/test/resources/geckodriver.exe");
+            //Create a new instance to the Firefox driver
+            driver = new FirefoxDriver();
+        }
+        else if (browserName.equalsIgnoreCase("Chrome")) {
+            System.setProperty("webdriver.chrome.driver",
+                    "src/test/resources/chromedriver.exe");
+            driver = new ChromeDriver();
+        }
+        else {
+            throw new Exception("Browser is not correct");
+        }
         driver.manage().window().maximize(); // open window in full screen
         driver.get("https://alerts.shotspotter.biz/");// open needed Web page
     }

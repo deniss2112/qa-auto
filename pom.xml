@@ -48,10 +48,7 @@
           <!--
           mvn clean test -DsuiteXmlFile=login-tests.xml
           mvn clean test -DsuiteXmlFile=login-tests-paralel.xml
-
           mvn clean test -DsuiteXmlFile=main-page-tests.xml
-
-          crome driver : https://chromedriver.storage.googleapis.com/index.html?path=2.30/
           -->
 
     </dependencies>
