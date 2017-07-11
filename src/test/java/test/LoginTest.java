@@ -40,12 +40,14 @@ public class LoginTest {
     @Parameters("browser")
     public void setUp(@Optional("Firefox") String browserName ) throws Exception {
         if (browserName.equalsIgnoreCase("Firefox")) {
+            System.setProperty("webdriver.gecko.driver",
+                    "src/test/resources/geckodriver.exe");
             //Create a new instance to the Firefox driver
             driver = new FirefoxDriver();
         }
         else if (browserName.equalsIgnoreCase("Chrome")) {
             System.setProperty("webdriver.chrome.driver",
-                    "C:/Users/QA/Downloads/chromedriver_win32/chromedriver.exe");
+                    "src/test/resources/chromedriver.exe");
             driver = new ChromeDriver();
         }
         else {
