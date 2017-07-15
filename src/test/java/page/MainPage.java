@@ -6,6 +6,7 @@ import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.PageFactory;
 
+import java.util.ArrayList;
 import java.util.List;
 
 
@@ -31,6 +32,12 @@ public class MainPage extends BasePage {
      */
     @FindBy(xpath = "//li[contains(text(),'Logout')]")
     private WebElement logoutMenuItem;
+
+    @FindBy(xpath = "//li[contains(text(),'About')]")
+    private WebElement aboutMenuItem;
+
+    @FindBy(xpath = "//a[contains(text(), 'terms of service')]")
+    private WebElement termsOfServiceLink;
 
     @FindBy(xpath = "//filter-menu/div[@class='selected-option']")
     private WebElement incedentsTimeFrameSwitch;
@@ -132,5 +139,45 @@ public class MainPage extends BasePage {
     }
 
 
+    public void openIncedentsList() {
+        listButton.click();
+        waitForElementToClick(incedentsCardsList.get(1), 5);
+    }
 
+    public List<String> getIncedentsCardsCities() {
+        List<String> listCities = new ArrayList<String>();
+        for(WebElement incedentCard: incedentsCardsList){
+            String cityText =incedentCard.findElement(By.xpath("//div[@class='city S']")).getText();
+            listCities.add(cityText);
+        }
+        return listCities;
+    }
+
+    public List<String> getIncedentsCardsStreets() {
+        List<String> listStreets =  new ArrayList<String>();
+        for(WebElement incedentCard: incedentsCardsList){
+            String streetText =incedentCard.findElement(By.xpath("//div[@class='address']")).getText();
+            listStreets.add(streetText);
+        }
+        return listStreets;
+    }
+
+    public List<String> getIncedentsCardsTimeStamp() {
+        List<String> listTimeStamp =  new ArrayList<String>();
+        for(WebElement incedentCard: incedentsCardsList){
+            String timeStampText =incedentCard.findElement(By.xpath("//div[@class='cell day']/div[@class='content']")).getText();
+            listTimeStamp.add(timeStampText);
+        }
+        return listTimeStamp;
+    }
+
+    public void goToTermsOfServicePage(){
+        settingsIcon.click();
+        waitForElementIsDisplay(settingsMenu,5);
+        waitForElementToClick(aboutMenuItem,5);
+        aboutMenuItem.click();
+        waitForElementIsDisplay(termsOfServiceLink, 5);
+        termsOfServiceLink.click();
+        //return new TermsOfServicePage(driver);
+    }
 }
