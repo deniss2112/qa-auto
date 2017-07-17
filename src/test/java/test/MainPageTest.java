@@ -119,7 +119,7 @@ public class MainPageTest {
     }
 
     @Test
-    public void testTermsOfServicePageOpen() throws InterruptedException {
+    public void testTermsOfServicePageOpen(){
         String parentWindow = driver.getWindowHandle();
 
         mainPage.goToTermsOfServicePage();
