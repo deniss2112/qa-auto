@@ -95,9 +95,9 @@ public class MainPageTest {
         mainPage.switchTimeFramePeriod(3);
 
         mainPage.openIncedentsList();
-        List<String> listCities  = mainPage.getIncedentsCardsCities();
-        List<String> listStreets  = mainPage.getIncedentsCardsStreets();
-        final List<String> listTimeStamp  = mainPage.getIncedentsCardsTimeStamp();
+        List<String> listCities  = mainPage.getSomeFromList("City");
+        List<String> listStreets  = mainPage.getSomeFromList("Street");
+        final List<String> listTimeStamp  = mainPage.getSomeFromList("TimeStamp");
 
         for (String elementCity: listCities) {
             Assert.assertEquals(elementCity, expextedCity, "City is not Denver");
@@ -112,7 +112,7 @@ public class MainPageTest {
         }
 
         //statment to check that all elements in list same
-        boolean isSame = Collections.frequency(listTimeStamp, "1") == listTimeStamp.size();
+        boolean isSame = Collections.frequency(listCities, "1") == listCities.size();
 
         Assert.assertFalse(isSame,"One of Time Stamp same to another");
 
