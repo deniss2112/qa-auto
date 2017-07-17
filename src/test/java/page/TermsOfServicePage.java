@@ -12,6 +12,7 @@ public class TermsOfServicePage extends  BasePage {
     @FindBy(id = "main-content")
     private WebElement contentOfTermsOfServicePage;
 
+
     public boolean isTermsOfServiceLoaded() {
         boolean termsOfServicePageUrl = driver.getCurrentUrl().contains("http://www.shotspotter.com/apps/tos");
         boolean termsOfServicePageTitle = driver.getTitle().contains("Apps-TOS");

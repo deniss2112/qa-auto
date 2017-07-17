@@ -21,6 +21,14 @@
                     </suiteXmlFiles>
                 </configuration>
             </plugin>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-compiler-plugin</artifactId>
+                <configuration>
+                    <source>1.8</source>
+                    <target>1.8</target>
+                </configuration>
+            </plugin>
         </plugins>
     </build>
 
@@ -44,29 +52,35 @@
             <artifactId>log4j</artifactId>
             <version>1.2.17</version>
         </dependency>
+        <dependency>
+            <groupId>com.itea</groupId>
+            <artifactId>qa-auto</artifactId>
+            <version>1.0-SNAPSHOT</version>
+            <scope>test</scope>
+        </dependency>
 
-          <!--
-          mvn clean test -DsuiteXmlFile=login-tests.xml
-          mvn clean test -DsuiteXmlFile=login-tests-paralel.xml
-          mvn clean test -DsuiteXmlFile=main-page-tests.xml
+        <!--
+        mvn clean test -DsuiteXmlFile=login-tests.xml
+        mvn clean test -DsuiteXmlFile=login-tests-paralel.xml
+        mvn clean test -DsuiteXmlFile=main-page-tests.xml
 
-          все евенты с города Денсера : имеют время -оно разное и не пустое, и имеют адрес который не пустой
+        все евенты с города Денсера : имеют время -оно разное и не пустое, и имеют адрес который не пустой
 
-          xpath работает с 1 до ....
-          //incident-list//incident-card[1]
-          //incident-list//incident-card[1]//div[@class='adress']
+        xpath работает с 1 до ....
+        //incident-list//incident-card[1]
+        //incident-list//incident-card[1]//div[@class='adress']
 
-          list from 10 street; check that element present
+        list from 10 street; check that element present
 
-          NO ANY NEW VARIABLES
-          работать с индексами в листе
+        NO ANY NEW VARIABLES
+        работать с индексами в листе
 
-          ДЗ новое :
-          3 метода отрефакторить, схлопнуть в один
-          время - разное
+        ДЗ новое :
+        3 метода отрефакторить, схлопнуть в один
+        время - разное
 
-          абоут - таймс оф сервис
-          -->
+        абоут - таймс оф сервис
+        -->
 
     </dependencies>
 </project>

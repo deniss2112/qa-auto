@@ -1,14 +1,18 @@
 package test;
 
+import org.openqa.selenium.By;
+import org.openqa.selenium.Keys;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.chrome.ChromeDriver;
 import org.openqa.selenium.firefox.FirefoxDriver;
+import org.openqa.selenium.interactions.Actions;
 import org.testng.Assert;
 import org.testng.annotations.*;
 import page.LoginPage;
 import page.MainPage;
 import page.TermsOfServicePage;
 
+import java.util.Collections;
 import java.util.List;
 
 import static java.lang.Thread.sleep;
@@ -88,10 +92,12 @@ public class MainPageTest {
 
         String expextedCity = "Denver";
 
+        mainPage.switchTimeFramePeriod(3);
+
         mainPage.openIncedentsList();
         List<String> listCities  = mainPage.getIncedentsCardsCities();
         List<String> listStreets  = mainPage.getIncedentsCardsStreets();
-        List<String> listTimeStamp  = mainPage.getIncedentsCardsTimeStamp();
+        final List<String> listTimeStamp  = mainPage.getIncedentsCardsTimeStamp();
 
         for (String elementCity: listCities) {
             Assert.assertEquals(elementCity, expextedCity, "City is not Denver");
@@ -104,6 +110,12 @@ public class MainPageTest {
         for (String elementTimeStamp: listTimeStamp) {
             Assert.assertNotEquals(elementTimeStamp, "", "TimeStamp is empty");
         }
+
+        //statment to check that all elements in list same
+        boolean isSame = Collections.frequency(listTimeStamp, "1") == listTimeStamp.size();
+
+        Assert.assertFalse(isSame,"One of Time Stamp same to another");
+
     }
 
     @Test
@@ -111,17 +123,12 @@ public class MainPageTest {
         String parentWindow = driver.getWindowHandle();
 
         mainPage.goToTermsOfServicePage();
-        sleep(6000);
-        //Assert.assertEquals(driver.getCurrentUrl(), "http://www.shotspotter.com/apps/tos", "Terms Of Service page isn't loaded");
-        Assert.assertEquals(driver.getTitle(), "Apps-TOS", "Terms Of Service page isn't loaded");
-        Assert.assertTrue(termsOfService.isTermsOfServiceLoaded(), "Terms Of Service page isn't loaded");
-
+         //Assert.assertTrue(termsOfService.isTermsOfServiceLoaded(), "Terms Of Service page isn't loaded");
         driver.switchTo().window(parentWindow);
-
+        mainPage.closeAboutWindow();
+        Assert.assertTrue(mainPage.isMainPageLoaded(), "Main page isn't loaded");
 
     }
-
-
 
     @AfterClass
     public  void closeWindow(){

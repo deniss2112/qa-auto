@@ -36,6 +36,9 @@ public class MainPage extends BasePage {
     @FindBy(xpath = "//li[contains(text(),'About')]")
     private WebElement aboutMenuItem;
 
+    @FindBy(xpath = "//*[@class='btn btn-primary']")
+    private WebElement closeButtonInAboutMenu;
+
     @FindBy(xpath = "//a[contains(text(), 'terms of service')]")
     private WebElement termsOfServiceLink;
 
@@ -171,6 +174,17 @@ public class MainPage extends BasePage {
         return listTimeStamp;
     }
 
+    public List<String> getSomeFromList(String whatWeNeedGet) {
+        List<String> list =  new ArrayList<String>();
+        for(WebElement incedentCard: incedentsCardsList){
+            String neededText =incedentCard.findElement(By.xpath("//div[@class='cell day']/div[@class='content']")).getText();
+            list.add(neededText);
+            return (List<String>) driver.findElement(By.xpath(
+                    String.format("//div[@class='available-options']//*[@class='time-increment' and text()='%s']", whatWeNeedGet)));
+        }
+        return list;
+    }
+
     public void goToTermsOfServicePage(){
         settingsIcon.click();
         waitForElementIsDisplay(settingsMenu,5);
@@ -178,6 +192,10 @@ public class MainPage extends BasePage {
         aboutMenuItem.click();
         waitForElementIsDisplay(termsOfServiceLink, 5);
         termsOfServiceLink.click();
-        //return new TermsOfServicePage(driver);
+    }
+
+    public void closeAboutWindow(){
+        waitForElementToClick(closeButtonInAboutMenu, 5);
+        closeButtonInAboutMenu.click();
     }
 }
