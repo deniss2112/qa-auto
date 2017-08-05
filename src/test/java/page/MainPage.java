@@ -156,17 +156,17 @@ public class MainPage extends BasePage {
         List<String> list =  new ArrayList<String>();
         if(whatWeNeedGet=="City") {
             for(WebElement incedentCard: incedentsCardsList){
-                String cityText =incedentCard.findElement(By.xpath("//div[@class='city S']")).getText();
+                String cityText =incedentCard.findElement(By.xpath(".//div[@class='city S']")).getText();
                 list.add(cityText);
             }
         }else if(whatWeNeedGet=="Street"){
             for(WebElement incedentCard: incedentsCardsList){
-                String streetText =incedentCard.findElement(By.xpath("//div[@class='address']")).getText();
+                String streetText =incedentCard.findElement(By.xpath(".//div[@class='address']")).getText();
                 list.add(streetText);
             }
         } else if(whatWeNeedGet=="TimeStamp"){
             for(WebElement incedentCard: incedentsCardsList){
-                String timeStampText =incedentCard.findElement(By.xpath("//div[@class='cell day']/div[@class='content']")).getText();
+                String timeStampText =incedentCard.findElement(By.xpath(".//div[@class='cell day']/div[@class='content']")).getText();
                 list.add(timeStampText);
             }
         } else {
