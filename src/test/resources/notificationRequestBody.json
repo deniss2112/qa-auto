@@ -1,0 +1,68 @@
+{
+  "source": "simulator",
+  "messageType": "incident_published",
+  "payload": {
+    "incidentGUID": "ihor-4",
+    "caseId": "",
+    "incidentTypeId": 1,
+    "incidentTypeName": "Single Gunshot",
+    "tagList": [
+      "test1",
+      "test2"
+    ],
+    "triggerDateTime": "2017-08-15T15:54:05.572Z",
+    "incidentMetaData": {
+      "confidence": 64,
+      "numShooters": 1,
+      "numShots": 1,
+      "shooterDirection": 0,
+      "shooterSpeed": 0
+    },
+    "zone": {
+      "zoneId": 9720,
+      "name": 9720,AgentCity
+      "beatName": 212,
+      "districtName": 2
+    },
+    "location": {
+      "locationType": "outdoor",
+      "latitude": 39.76686475,
+      "longitude": -104.9562041,
+      "altitude": 1575.749232,
+      "address": {
+        "streetName": " Agent",
+        "city": "",
+        "state": "",
+        "zipCode": "",
+        "country": "USA",
+        "addressMetaData": {
+          "building": "",
+          "floor": "",
+          "room": ""
+        }
+      }
+    },
+    "name": "",
+    "acknowledged": 0,
+    "closed": null,
+    "commentList": [
+
+    ],
+    "contentList": [
+      {
+        "downloadStatus": 4,
+        "fileSize": 96576,
+        "mimeType": "audio/x-mp3",
+        "percentage": 100,
+        "sourceId": 1,
+        "url": "https://us7.shotspotter.net/DenverCO/Audio/2015-01/2015-01-16/DenverPD0720_596_(008-8-Willow_Apts).mp3",
+        "contentMetaData": {
+          "distance": 1117.39,
+          "pictureUrl": "https://us7.shotspotter.net/DenverCO/Audio/2014-12/2014-12-05/DenverPD0720_5_(009-9-E_37th_Apts).png",
+          "totalCount": 9
+        }
+      }
+    ],
+    "sourceIncidentId": "9720"
+  }
+}

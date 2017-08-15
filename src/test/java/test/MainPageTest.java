@@ -1,21 +1,22 @@
 package test;
 
-import org.openqa.selenium.By;
-import org.openqa.selenium.Keys;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.chrome.ChromeDriver;
 import org.openqa.selenium.firefox.FirefoxDriver;
-import org.openqa.selenium.interactions.Actions;
 import org.testng.Assert;
 import org.testng.annotations.*;
 import page.LoginPage;
 import page.MainPage;
 import page.TermsOfServicePage;
 
+import java.io.IOException;
+import java.nio.file.Files;
+import java.nio.file.Paths;
 import java.util.Collections;
 import java.util.List;
 
-import static java.lang.Thread.sleep;
+import static com.jayway.restassured.RestAssured.given;
+import static org.hamcrest.CoreMatchers.containsString;
 
 
 public class MainPageTest {
@@ -127,6 +128,39 @@ public class MainPageTest {
         driver.switchTo().window(parentWindow);
         mainPage.closeAboutWindow();
         Assert.assertTrue(mainPage.isMainPageLoaded(), "Main page isn't loaded");
+
+    }
+
+    @Test
+    public void testNewAllertNotification() throws IOException {
+        String jsonBody = generateStringFromResource("/test/resources/notificationRequestBody.json");
+
+        given().
+                contentType("application/json").
+                body(jsonBody).
+                when().
+                post("https:alerts.shotspotter.biz/api/incidents/v2/").
+                then().
+                statusCode(200).
+                body(containsString("true"));
+
+        String expextedCity = "AgentCity";
+
+        mainPage.switchTimeFramePeriod(24);
+
+        mainPage.openIncedentsList();
+        List<String> listCities  = mainPage.getSomeFromList("City");
+
+        for (String elementCity: listCities) {
+            Assert.assertTrue(listCities.contains(expextedCity), "card with Expected City isn't found");
+
+        }
+
+
+    }
+    public String generateStringFromResource(String path) throws IOException {
+
+        return new String(Files.readAllBytes(Paths.get(path)));
 
     }
 
